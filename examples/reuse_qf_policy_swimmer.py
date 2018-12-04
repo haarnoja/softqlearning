@@ -10,7 +10,7 @@ from softqlearning.algorithms import SQL
 from softqlearning.misc.instrument import run_sql_experiment
 from softqlearning.misc.kernel import adaptive_isotropic_gaussian_kernel
 from softqlearning.misc.sampler import SimpleSampler
-from softqlearning.misc.utils import timestamp
+from softqlearning.misc.utils import timestamp, spec
 from softqlearning.replay_buffers import SimpleReplayBuffer
 
 
@@ -18,7 +18,7 @@ def run_experiment(variant):
     env = normalize(SwimmerEnv())
 
     pool = SimpleReplayBuffer(
-        env_spec=env.spec, max_replay_buffer_size=1e6)
+        env_spec=spec(env), max_replay_buffer_size=1e6)
 
     sampler = SimpleSampler(
         max_path_length=1000,

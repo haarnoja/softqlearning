@@ -8,7 +8,7 @@ from softqlearning.environments.pusher import PusherEnv
 from softqlearning.misc.instrument import run_sql_experiment
 from softqlearning.algorithms import SQL
 from softqlearning.misc.kernel import adaptive_isotropic_gaussian_kernel
-from softqlearning.misc.utils import timestamp
+from softqlearning.misc.utils import timestamp, spec
 from softqlearning.replay_buffers import SimpleReplayBuffer
 from softqlearning.value_functions import NNQFunction
 from softqlearning.policies import StochasticNNPolicy
@@ -83,7 +83,7 @@ def run_experiment(variant):
         raise ValueError
 
     pool = SimpleReplayBuffer(
-        env_spec=env.spec, max_replay_buffer_size=variant['max_pool_size'])
+        env_spec=spec(env), max_replay_buffer_size=variant['max_pool_size'])
 
     sampler = SimpleSampler(
         max_path_length=variant['max_path_length'],
@@ -102,12 +102,12 @@ def run_experiment(variant):
 
     M = variant['layer_size']
     qf = NNQFunction(
-        env_spec=env.spec,
+        env_spec=spec(env),
         hidden_layer_sizes=(M, M),
         name='qf_{i}'.format(i=task_id))
 
     policy = StochasticNNPolicy(
-        env_spec=env.spec,
+        env_spec=spec(env),
         hidden_layer_sizes=(M, M),
         name='policy_{i}'.format(i=task_id))
 
