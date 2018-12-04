@@ -3,8 +3,8 @@ import ray  # TODO: Add ray to dependencies.
 import tensorflow as tf
 import numpy as np
 
-from rllab.misc.overrides import overrides
-from rllab.misc import logger
+from garage.misc.overrides import overrides
+from garage.misc import logger
 
 from . import tf_utils
 from .sampler import Sampler, rollout

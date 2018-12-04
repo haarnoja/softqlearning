@@ -1,8 +1,8 @@
 import argparse
 import pickle
 
-from rllab.envs.normalized_env import normalize
-from rllab.misc.instrument import VariantGenerator
+from garage.envs.normalized_env import normalize
+from garage.experiment.experiment import VariantGenerator
 
 from softqlearning.environments.pusher import PusherEnv
 from softqlearning.misc.instrument import run_sql_experiment

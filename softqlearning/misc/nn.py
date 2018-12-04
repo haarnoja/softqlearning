@@ -1,7 +1,7 @@
 import tensorflow as tf
 
-from rllab.core.serializable import Serializable
-from sandbox.rocky.tf.core.parameterized import Parameterized
+from garage.core.serializable import Serializable
+from garage.core.parameterized import Parameterized
 
 from softqlearning.misc import tf_utils
 

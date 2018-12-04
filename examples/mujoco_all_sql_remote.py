@@ -8,10 +8,10 @@ optimizers rather then waiting for new sample to arrive.
 """
 import argparse
 
-from rllab.envs.normalized_env import normalize
-from rllab.envs.mujoco.swimmer_env import SwimmerEnv
-from rllab.envs.mujoco.humanoid_env import HumanoidEnv
-from rllab.misc.instrument import VariantGenerator
+from garage.envs.normalized_env import normalize
+from garage.envs.mujoco.swimmer_env import SwimmerEnv
+from garage.envs.mujoco.humanoid_env import HumanoidEnv
+from garage.experiment.experiment import VariantGenerator
 
 from softqlearning.misc.instrument import run_sql_experiment
 from softqlearning.algorithms import SQL

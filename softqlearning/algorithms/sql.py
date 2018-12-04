@@ -1,8 +1,9 @@
 import numpy as np
 import tensorflow as tf
 
-from rllab.misc import logger
-from rllab.misc.overrides import overrides
+from garage.misc import logger
+from garage.misc.overrides import overrides
+from garage.envs.util import flat_dim
 
 from softqlearning.misc.kernel import adaptive_isotropic_gaussian_kernel
 from softqlearning.misc import tf_utils
@@ -109,8 +110,8 @@ class SQL(RLAlgorithm):
         self._train_qf = train_qf
         self._train_policy = train_policy
 
-        self._observation_dim = self.env.observation_space.flat_dim
-        self._action_dim = self.env.action_space.flat_dim
+        self._observation_dim = flat_dim(self.env.observation_space)
+        self._action_dim = flat_dim(self.env.action_space)
 
         self._create_placeholders()
 

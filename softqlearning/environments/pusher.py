@@ -2,10 +2,10 @@ import os.path as osp
 
 import numpy as np
 
-from rllab.core.serializable import Serializable
-from rllab.envs.mujoco.mujoco_env import MujocoEnv
-from rllab.misc import logger
-from rllab.misc.overrides import overrides
+from garage.core.serializable import Serializable
+from garage.envs.mujoco.mujoco_env import MujocoEnv
+from garage.misc import logger
+from garage.misc.overrides import overrides
 
 from softqlearning.misc.utils import PROJECT_PATH
 

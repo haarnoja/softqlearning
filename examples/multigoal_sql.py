@@ -1,7 +1,7 @@
 """ Example script to perform soft Q-learning in the multigoal environment. """
 import numpy as np
 
-from rllab.envs.normalized_env import normalize
+from garage.envs.normalized_env import normalize
 
 from softqlearning.algorithms import SQL
 from softqlearning.misc.kernel import adaptive_isotropic_gaussian_kernel

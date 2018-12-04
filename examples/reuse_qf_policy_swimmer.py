@@ -3,8 +3,8 @@ import argparse
 
 import joblib
 import tensorflow as tf
-from rllab.envs.mujoco.swimmer_env import SwimmerEnv
-from rllab.envs.normalized_env import normalize
+from garage.envs.mujoco.swimmer_env import SwimmerEnv
+from garage.envs.normalized_env import normalize
 
 from softqlearning.algorithms import SQL
 from softqlearning.misc.instrument import run_sql_experiment

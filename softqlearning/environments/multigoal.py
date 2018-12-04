@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from rllab.misc.overrides import overrides
-from rllab.core.serializable import Serializable
-from rllab.spaces.box import Box
-from rllab.envs.base import Env
-from rllab.misc import logger
+from garage.misc.overrides import overrides
+from garage.core.serializable import Serializable
+from garage.spaces.box import Box
+from gym import Env
+from garage.misc import logger
 
 
 class MultiGoalEnv(Env, Serializable):

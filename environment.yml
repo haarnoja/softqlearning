@@ -2,22 +2,29 @@ name: sql
 dependencies:
     - cached-property
     - cloudpickle
-    - flask
-    - joblib
-    - lasagne
-    - matplotlib
-    - mako
-    - numpy==1.13.1
+    - mkl-service=1.1.2
+    - mkl==2017.0.4
+    - numpy==1.14.5
     - path.py
-    - plotly
     - PyOpenGL
-    - python==3.5.2
+    - python==3.6.6
     - six
-    - theano==0.8.2
     - pip:
+        - cffi
+        - cma==1.1.06
+        - flask
         - gtimer
-        - gym==0.8
-        - mujoco_py==0.5.7
+        - gym[all]==0.10.8
+        - jsonmerge
+        - joblib<0.13,>=0.12
+        - git+https://github.com/Lasagne/Lasagne.git@a61b76fd991f84c50acdb7bea02118899b5fefe1#egg=lasagne
+        - mako
+        - matplotlib
+        - mujoco-py<1.50.2,>=1.50.1
+        - nose2
+        - git+https://github.com/plotly/plotly.py.git@2594076e29584ede2d09f2aa40a8a195b3f3fc66#egg=plotly
+        - psutil
         - pyprind
         - ray
-        - tensorflow
+        - tensorflow<1.10,>=1.9.0
+        - Theano==1.0.2

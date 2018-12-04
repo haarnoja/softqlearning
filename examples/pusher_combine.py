@@ -2,8 +2,8 @@ import argparse
 import joblib
 import os
 
-from rllab.envs.normalized_env import normalize
-from rllab.misc.instrument import VariantGenerator
+from garage.envs.normalized_env import normalize
+from garage.experiment.experiment import VariantGenerator
 
 from softqlearning.misc import tf_utils
 from softqlearning.misc.instrument import run_sql_experiment
