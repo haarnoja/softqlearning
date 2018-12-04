@@ -1,14 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from garage.misc.overrides import overrides
 from garage.core.serializable import Serializable
-from garage.spaces.box import Box
-from gym import Env
+from gym.spaces import Box
 from garage.misc import logger
 
 
-class MultiGoalEnv(Env, Serializable):
+class MultiGoalEnv(Serializable):
     """
     Move a 2D point mass to one of the goal positions. Cost is the distance to
     the closest goal.
@@ -16,10 +14,9 @@ class MultiGoalEnv(Env, Serializable):
     State: position.
     Action: velocity.
     """
+
     def __init__(self, goal_reward=10, actuation_cost_coeff=30,
                  distance_cost_coeff=1, init_sigma=0.1):
-        super(MultiGoalEnv, self).__init__()
-        Serializable.quick_init(self, locals())
 
         self.dynamics = PointDynamics(dim=2, sigma=0)
         self.init_mu = np.zeros(2, dtype=np.float32)
@@ -43,49 +40,54 @@ class MultiGoalEnv(Env, Serializable):
         self.reset()
         self.observation = None
 
+        self.reward_range = (-float('inf'), float('inf'))
+        self.metadata = {'render.modes': []}
+        self.spec = None
+
         self._ax = None
         self._env_lines = []
         self.fixed_plots = None
         self.dynamic_plots = []
 
-    @overrides
+        super().__init__()
+        Serializable.quick_init(self, locals())
+
     def reset(self):
         unclipped_observation = self.init_mu + self.init_sigma * \
-            np.random.normal(size=self.dynamics.s_dim)
-        o_lb, o_ub = self.observation_space.bounds
+                                np.random.normal(size=self.dynamics.s_dim)
+        o_lb, o_ub = self.observation_space.low, self.observation_space.high
         self.observation = np.clip(unclipped_observation, o_lb, o_ub)
         return self.observation
 
-    @overrides
     @property
     def observation_space(self):
         return Box(
             low=np.array((self.xlim[0], self.ylim[0])),
             high=np.array((self.xlim[1], self.ylim[1])),
-            shape=None
+            shape=None,
+            dtype=np.float32
         )
 
-    @overrides
     @property
     def action_space(self):
         return Box(
             low=-self.vel_bound,
             high=self.vel_bound,
-            shape=(self.dynamics.a_dim,)
+            shape=(self.dynamics.a_dim,),
+            dtype=np.float32
         )
 
     def get_current_obs(self):
         return np.copy(self.observation)
 
-    @overrides
     def step(self, action):
         action = action.ravel()
 
-        a_lb, a_ub = self.action_space.bounds
+        a_lb, a_ub = self.action_space.low, self.action_space.high
         action = np.clip(action, a_lb, a_ub).ravel()
 
         next_obs = self.dynamics.forward(self.observation, action)
-        o_lb, o_ub = self.observation_space.bounds
+        o_lb, o_ub = self.observation_space.low, self.observation_space.high
         next_obs = np.clip(next_obs, o_lb, o_ub)
 
         self.observation = np.copy(next_obs)
@@ -117,7 +119,6 @@ class MultiGoalEnv(Env, Serializable):
 
         self._plot_position_cost(self._ax)
 
-    @overrides
     def render(self, paths):
         if self._ax is None:
             self._init_plot()
@@ -181,7 +182,6 @@ class MultiGoalEnv(Env, Serializable):
     def set_param_values(self, params):
         pass
 
-    @overrides
     def log_diagnostics(self, paths):
         n_goal = len(self.goal_positions)
         goal_reached = [False] * n_goal
@@ -194,7 +194,6 @@ class MultiGoalEnv(Env, Serializable):
 
         logger.record_tabular('env:goals_reached', goal_reached.count(True))
 
-    @overrides
     def horizon(self):
         return None
 
@@ -204,6 +203,7 @@ class PointDynamics(object):
     State: position.
     Action: velocity.
     """
+
     def __init__(self, dim, sigma):
         self.dim = dim
         self.sigma = sigma
@@ -213,5 +213,5 @@ class PointDynamics(object):
     def forward(self, state, action):
         mu_next = state + action
         state_next = mu_next + self.sigma * \
-            np.random.normal(size=self.s_dim)
+                     np.random.normal(size=self.s_dim)
         return state_next
