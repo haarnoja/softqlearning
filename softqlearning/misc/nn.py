@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 from garage.core.serializable import Serializable
-from garage.core.parameterized import Parameterized
+from garage.tf.core.parameterized import Parameterized
 
 from softqlearning.misc import tf_utils
 
