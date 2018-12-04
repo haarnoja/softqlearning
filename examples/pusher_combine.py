@@ -2,8 +2,8 @@ import argparse
 import joblib
 import os
 
-from rllab.envs.normalized_env import normalize
-from rllab.misc.instrument import VariantGenerator
+from garage.envs.normalized_env import normalize
+from garage.experiment.experiment import VariantGenerator
 
 from softqlearning.misc import tf_utils
 from softqlearning.misc.instrument import run_sql_experiment
@@ -15,7 +15,7 @@ from softqlearning.value_functions import SumQFunction
 from softqlearning.policies import StochasticNNPolicy
 from softqlearning.environments.pusher import PusherEnv
 from softqlearning.misc.sampler import DummySampler
-from softqlearning.misc.utils import PROJECT_PATH
+from softqlearning.misc.utils import PROJECT_PATH, spec
 
 SHARED_PARAMS = {
     'seed': 0,
@@ -92,11 +92,11 @@ def run_experiment(variant):
         max_path_length=variant['max_path_length'])
     buffer = UnionBuffer(buffers=(buffer1, buffer2))
 
-    qf = SumQFunction(env.spec, q_functions=(qf1, qf2))
+    qf = SumQFunction(spec(env), q_functions=(qf1, qf2))
 
     M = variant['layer_size']
     policy = StochasticNNPolicy(
-        env_spec=env.spec,
+        env_spec=spec(env),
         hidden_layer_sizes=(M, M),
         name='policy{i}'.format(i=0))
 

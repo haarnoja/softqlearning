@@ -1,6 +1,7 @@
 import numpy as np
 
-from rllab.core.serializable import Serializable
+from garage.core.serializable import Serializable
+from garage.envs.util import flat_dim
 
 from .replay_buffer import ReplayBuffer
 
@@ -13,8 +14,8 @@ class SimpleReplayBuffer(ReplayBuffer, Serializable):
         max_replay_buffer_size = int(max_replay_buffer_size)
 
         self._env_spec = env_spec
-        self._observation_dim = env_spec.observation_space.flat_dim
-        self._action_dim = env_spec.action_space.flat_dim
+        self._observation_dim = flat_dim(env_spec.observation_space)
+        self._action_dim = flat_dim(env_spec.action_space)
         self._max_buffer_size = max_replay_buffer_size
         self._observations = np.zeros((max_replay_buffer_size,
                                        self._observation_dim))

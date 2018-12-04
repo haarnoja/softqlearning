@@ -3,8 +3,8 @@ import gtimer as gt
 
 import numpy as np
 
-from rllab.misc import logger
-from rllab.algos.base import Algorithm
+from garage.misc import logger
+from garage.algos.base import Algorithm
 
 from softqlearning.misc.utils import deep_clone
 from softqlearning.misc import tf_utils

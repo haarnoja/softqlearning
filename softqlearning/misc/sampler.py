@@ -1,12 +1,13 @@
 import numpy as np
 import time
 
-from rllab.misc import logger
+from garage.misc import logger
+from garage.envs.util import flat_dim
 
 
 def rollout(env, policy, path_length, render=False, speedup=None):
-    Da = env.action_space.flat_dim
-    Do = env.observation_space.flat_dim
+    Da = flat_dim(env.action_space)
+    Do = flat_dim(env.observation_space)
 
     observation = env.reset()
     policy.reset()

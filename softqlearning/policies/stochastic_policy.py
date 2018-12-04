@@ -1,6 +1,7 @@
 import tensorflow as tf
 
-from rllab.core.serializable import Serializable
+from garage.core.serializable import Serializable
+from garage.envs.util import flat_dim
 
 from softqlearning.misc.nn import feedforward_net
 
@@ -17,8 +18,8 @@ class StochasticNNPolicy(NNPolicy, Serializable):
                  name='policy'):
         Serializable.quick_init(self, locals())
 
-        self._action_dim = env_spec.action_space.flat_dim
-        self._observation_dim = env_spec.observation_space.flat_dim
+        self._action_dim = flat_dim(env_spec.action_space)
+        self._observation_dim = flat_dim(env_spec.observation_space)
         self._layer_sizes = list(hidden_layer_sizes) + [self._action_dim]
         self._squash = squash
         self._name = name

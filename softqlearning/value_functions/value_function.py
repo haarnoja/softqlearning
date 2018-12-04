@@ -1,7 +1,8 @@
 import tensorflow as tf
 import numpy as np
 
-from rllab.core.serializable import Serializable
+from garage.core.serializable import Serializable
+from garage.envs.util import flat_dim
 
 from softqlearning.misc.nn import MLPFunction
 from softqlearning.misc import tf_utils
@@ -14,21 +15,21 @@ class NNVFunction(MLPFunction):
                  name='value_function'):
         Serializable.quick_init(self, locals())
 
-        self._Do = env_spec.observation_space.flat_dim
+        self._Do = flat_dim(env_spec.observation_space)
         self._observations_ph = tf.placeholder(
             tf.float32, shape=[None, self._Do], name='observations')
 
         super(NNVFunction, self).__init__(
-            inputs=(self._observations_ph, ),
+            inputs=(self._observations_ph,),
             name=name,
             hidden_layer_sizes=hidden_layer_sizes)
 
     def eval(self, observations):
-        return super(NNVFunction, self)._eval((observations, ))
+        return super(NNVFunction, self)._eval((observations,))
 
     def output_for(self, observations, reuse=False):
         return super(NNVFunction, self)._output_for(
-            (observations, ), reuse=reuse)
+            (observations,), reuse=reuse)
 
 
 class NNQFunction(MLPFunction):
@@ -38,8 +39,8 @@ class NNQFunction(MLPFunction):
                  name='q_function'):
         Serializable.quick_init(self, locals())
 
-        self._Da = env_spec.action_space.flat_dim
-        self._Do = env_spec.observation_space.flat_dim
+        self._Da = flat_dim(env_spec.action_space)
+        self._Do = flat_dim(env_spec.observation_space)
 
         self._observations_ph = tf.placeholder(
             tf.float32, shape=[None, self._Do], name='observations')
@@ -65,8 +66,8 @@ class SumQFunction(Serializable):
 
         self.q_functions = q_functions
 
-        self._Da = env_spec.action_space.flat_dim
-        self._Do = env_spec.observation_space.flat_dim
+        self._Da = flat_dim(env_spec.action_space)
+        self._Do = flat_dim(env_spec.observation_space)
 
         self._observations_ph = tf.placeholder(
             tf.float32, shape=[None, self._Do], name='observations')

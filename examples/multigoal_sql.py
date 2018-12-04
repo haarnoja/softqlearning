@@ -1,7 +1,7 @@
 """ Example script to perform soft Q-learning in the multigoal environment. """
 import numpy as np
 
-from rllab.envs.normalized_env import normalize
+from garage.envs.normalized_env import normalize
 
 from softqlearning.algorithms import SQL
 from softqlearning.misc.kernel import adaptive_isotropic_gaussian_kernel
@@ -11,13 +11,14 @@ from softqlearning.value_functions import NNQFunction
 from softqlearning.misc.plotter import QFPolicyPlotter
 from softqlearning.policies import StochasticNNPolicy
 from softqlearning.misc.sampler import SimpleSampler
+from softqlearning.misc.utils import spec
 
 
 def test():
 
     env = normalize(MultiGoalEnv())
 
-    pool = SimpleReplayBuffer(env_spec=env.spec, max_replay_buffer_size=1e6)
+    pool = SimpleReplayBuffer(env_spec=spec(env), max_replay_buffer_size=1e6)
 
     sampler = SimpleSampler(
         max_path_length=30, min_pool_size=100, batch_size=64)
@@ -33,9 +34,9 @@ def test():
 
     M = 128
     policy = StochasticNNPolicy(
-        env.spec, hidden_layer_sizes=(M, M), squash=True)
+        spec(env), hidden_layer_sizes=(M, M), squash=True)
 
-    qf = NNQFunction(env_spec=env.spec, hidden_layer_sizes=[M, M])
+    qf = NNQFunction(env_spec=spec(env), hidden_layer_sizes=[M, M])
 
     plotter = QFPolicyPlotter(
         qf=qf,

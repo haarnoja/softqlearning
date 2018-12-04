@@ -1,5 +1,5 @@
 import tensorflow as tf
-from rllab import config
+from garage import config
 
 
 def get_default_session():
