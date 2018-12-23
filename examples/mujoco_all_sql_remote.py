@@ -8,15 +8,15 @@ optimizers rather then waiting for new sample to arrive.
 """
 import argparse
 
-from rllab.envs.normalized_env import normalize
-from rllab.envs.mujoco.swimmer_env import SwimmerEnv
-from rllab.envs.mujoco.humanoid_env import HumanoidEnv
-from rllab.misc.instrument import VariantGenerator
+from garage.envs.normalized_env import normalize
+from garage.envs.mujoco.swimmer_env import SwimmerEnv
+from garage.envs.mujoco.humanoid_env import HumanoidEnv
+from garage.experiment.experiment import VariantGenerator
 
 from softqlearning.misc.instrument import run_sql_experiment
 from softqlearning.algorithms import SQL
 from softqlearning.misc.kernel import adaptive_isotropic_gaussian_kernel
-from softqlearning.misc.utils import timestamp
+from softqlearning.misc.utils import timestamp, spec
 from softqlearning.replay_buffers import SimpleReplayBuffer
 from softqlearning.value_functions import NNQFunction
 from softqlearning.policies import StochasticNNPolicy
@@ -125,7 +125,7 @@ def run_experiment(variant):
     env = DelayedEnv(env, delay=0.01)
 
     pool = SimpleReplayBuffer(
-        env_spec=env.spec, max_replay_buffer_size=variant['max_pool_size'])
+        env_spec=spec(env), max_replay_buffer_size=variant['max_pool_size'])
 
     sampler = RemoteSampler(
         max_path_length=variant['max_path_length'],
@@ -141,9 +141,9 @@ def run_experiment(variant):
         sampler=sampler)
 
     M = variant['layer_size']
-    qf = NNQFunction(env_spec=env.spec, hidden_layer_sizes=(M, M))
+    qf = NNQFunction(env_spec=spec(env), hidden_layer_sizes=(M, M))
 
-    policy = StochasticNNPolicy(env_spec=env.spec, hidden_layer_sizes=(M, M))
+    policy = StochasticNNPolicy(env_spec=spec(env), hidden_layer_sizes=(M, M))
 
     algorithm = SQL(
         base_kwargs=base_kwargs,

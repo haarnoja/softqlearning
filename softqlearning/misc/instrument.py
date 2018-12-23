@@ -1,7 +1,7 @@
 import os
 import uuid
 
-from rllab.misc.instrument import run_experiment_lite
+from garage.experiment.experiment import run_experiment
 from softqlearning.misc.utils import timestamp, PROJECT_PATH
 
 DEFAULT_LOG_DIR = PROJECT_PATH + "/data"
@@ -46,8 +46,8 @@ def run_sql_experiment(main,
 
         kwargs.update(added_project_directories=all_symlinks)
 
-    run_experiment_lite(
-        stub_method_call=main,
+    run_experiment(
+        method_call=main,
         mode=mode,
         exp_prefix=exp_prefix,
         exp_name=exp_name,

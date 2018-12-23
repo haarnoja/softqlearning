@@ -7,20 +7,19 @@ import traceback
 import logging
 
 try:
-    from gym.wrappers.monitoring import logger as monitor_logger
-
+    from gym import logger as monitor_logger
     monitor_logger.setLevel(logging.WARNING)
 except Exception as e:
     traceback.print_exc()
 
 import os
-import os.path as osp
-from rllab.envs.base import Env, Step
-from rllab.core.serializable import Serializable
-from rllab.spaces.box import Box
-from rllab.spaces.discrete import Discrete
-from rllab.spaces.product import Product
-from rllab.misc import logger
+from gym import Env
+from garage.envs.base import Step
+from garage.core.serializable import Serializable
+from garage.spaces.box import Box
+from garage.spaces.discrete import Discrete
+from garage.spaces.tuple import Tuple
+from garage.misc import logger
 
 
 def convert_gym_space(space):
@@ -29,7 +28,7 @@ def convert_gym_space(space):
     elif isinstance(space, gym.spaces.Discrete):
         return Discrete(n=space.n)
     elif isinstance(space, gym.spaces.Tuple):
-        return Product([convert_gym_space(x) for x in space.spaces])
+        return Tuple([convert_gym_space(x) for x in space.spaces])
     else:
         raise NotImplementedError
 

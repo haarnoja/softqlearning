@@ -3,7 +3,7 @@ import argparse
 import joblib
 import tensorflow as tf
 
-from rllab.sampler.utils import rollout
+from garage.sampler.utils import rollout
 
 
 def parse_args():

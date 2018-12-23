@@ -2,7 +2,8 @@ import datetime
 import dateutil.tz
 import os
 
-from rllab.core.serializable import Serializable
+from garage.core.serializable import Serializable
+from garage.envs import EnvSpec
 
 
 def timestamp():
@@ -39,3 +40,12 @@ def deep_clone(obj):
     out.__setstate__(d)
 
     return out
+
+
+def spec(env):
+    if env.spec is not None:
+        return env.spec
+    return EnvSpec(
+        observation_space=env.observation_space,
+        action_space=env.action_space,
+    )
