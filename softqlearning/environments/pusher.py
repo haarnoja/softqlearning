@@ -123,8 +123,8 @@ class PusherEnv(MujocoEnv, Serializable):
         qvel[self.PUCK_INDS] = 0
         qvel[self.TARGET_INDS] = 0
 
-        qacc = np.zeros(self.model.data.qacc.shape[0])
-        ctrl = np.zeros(self.model.data.ctrl.shape[0])
+        qacc = np.zeros(self.sim.data.qacc.shape[0])
+        ctrl = np.zeros(self.sim.data.ctrl.shape[0])
 
         full_state = np.concatenate((qpos, qvel, qacc, ctrl))
         super(PusherEnv, self).reset(full_state)
@@ -134,8 +134,8 @@ class PusherEnv(MujocoEnv, Serializable):
     @overrides
     def get_current_obs(self):
         return np.concatenate([
-            self.model.data.qpos.flat[self.JOINT_INDS],
-            self.model.data.qvel.flat[self.JOINT_INDS],
+            self.sim.data.qpos.flat[self.JOINT_INDS],
+            self.sim.data.qvel.flat[self.JOINT_INDS],
             self.get_body_com("distal_4"),
             self.get_body_com("object"),
         ]).reshape(-1)

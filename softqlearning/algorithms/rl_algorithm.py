@@ -107,8 +107,6 @@ class RLAlgorithm(Algorithm):
                 logger.dump_tabular(with_prefix=False)
                 logger.pop_prefix()
 
-            self.sampler.terminate()
-
     def _evaluate(self, policy, evaluation_env):
         """Perform evaluation for the current policy."""
 
