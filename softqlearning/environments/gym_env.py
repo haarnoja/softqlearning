@@ -124,7 +124,6 @@ class GymEnv(Env, Serializable):
 
     def render(self, mode='human', close=False):
         return self.env.render(mode, close)
-        # self.env.render()
 
     def terminate(self):
         if self.monitoring:
