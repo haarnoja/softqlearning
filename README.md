@@ -1,3 +1,5 @@
+**This repository is no longer maintained. Please use our new [Softlearning](https://github.com/rail-berkeley/softlearning) package instead.**
+
 # Soft Q-Learning
 Soft Q-learning (SQL) is a deep reinforcement learning framework for training maximum entropy policies in continuous domains. The algorithm is based on the paper [Reinforcement Learning with Deep Energy-Based Policies](https://arxiv.org/abs/1702.08165) presented at the International Conference on Machine Learning (ICML), 2017.
 
