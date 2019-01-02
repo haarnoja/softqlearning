@@ -123,7 +123,7 @@ class GymEnv(Env, Serializable):
         return Step(next_obs, reward, done, **info)
 
     def render(self, mode='human', close=False):
-        return self.env._render(mode, close)
+        return self.env.render(mode, close)
         # self.env.render()
 
     def terminate(self):
