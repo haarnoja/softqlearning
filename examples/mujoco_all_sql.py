@@ -46,14 +46,14 @@ ENV_PARAMS = {
     },
     'hopper': {  # 3 DoF
         'prefix': 'hopper',
-        'env_name': 'Hopper-v1',
+        'env_name': 'Hopper-v2',
         'max_path_length': 1000,
         'n_epochs': 2000,
         'reward_scale': 30,
     },
     'half-cheetah': {  # 6 DoF
         'prefix': 'half-cheetah',
-        'env_name': 'HalfCheetah-v1',
+        'env_name': 'HalfCheetah-v2',
         'max_path_length': 1000,
         'n_epochs': 10000,
         'reward_scale': 30,
@@ -61,14 +61,14 @@ ENV_PARAMS = {
     },
     'walker': {  # 6 DoF
         'prefix': 'walker',
-        'env_name': 'Walker2d-v1',
+        'env_name': 'Walker2d-v2',
         'max_path_length': 1000,
         'n_epochs': 5000,
         'reward_scale': 10,
     },
     'ant': {  # 8 DoF
         'prefix': 'ant',
-        'env_name': 'Ant-v1',
+        'env_name': 'Ant-v2',
         'max_path_length': 1000,
         'n_epochs': 10000,
         'reward_scale': 300,
