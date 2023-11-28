@@ -85,3 +85,7 @@ RUN MUJOCO_ZIP="mjpro$(echo ${MUJOCO_VERSION} | sed -e "s/\.//g")_linux.zip" \
     && cp ${MUJOCO_PATH}/mjpro131/bin/libmujoco131.so ${RLLAB_PATH}/vendor/mujoco/ \
     && cp ${MUJOCO_PATH}/mjpro131/bin/libglfw.so.3 ${RLLAB_PATH}/vendor/mujoco/ \
     && rm ${MUJOCO_PATH}/${MUJOCO_ZIP}
+
+# ========== Package Patches ==========
+
+RUN source activate sql && pip install "numpy>=1.16"
