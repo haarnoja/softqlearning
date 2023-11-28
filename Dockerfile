@@ -5,6 +5,8 @@ FROM ubuntu:16.04
 # https://github.com/ContinuumIO/docker-images/blob/master/anaconda/Dockerfile
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
+SHELL ["/bin/bash", "-c"]
+
 RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
     git mercurial subversion
@@ -15,8 +17,8 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     rm ~/anaconda.sh
 
 RUN apt-get install -y curl grep sed dpkg && \
-    TINI_VERSION=`curl https://github.com/krallin/tini/releases/latest | grep -o "/v.*\"" | sed 's:^..\(.*\).$:\1:'` && \
-    curl -L "https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini_${TINI_VERSION}.deb" > tini.deb && \
+    TINI_VERSION=`curl https://api.github.com/repos/krallin/tini/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'` && \
+    curl -L "https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini_${TINI_VERSION:1}.deb" > tini.deb && \
     dpkg -i tini.deb && \
     rm tini.deb && \
     apt-get clean
