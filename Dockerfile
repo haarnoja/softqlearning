@@ -89,3 +89,4 @@ RUN MUJOCO_ZIP="mjpro$(echo ${MUJOCO_VERSION} | sed -e "s/\.//g")_linux.zip" \
 # ========== Package Patches ==========
 
 RUN source activate sql && pip install "numpy>=1.16"
+RUN sed -i 's/MemmapingPool/MemmappingPool/g' /root/rllab/rllab/sampler/stateful_pool.py
