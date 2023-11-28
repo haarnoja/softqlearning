@@ -16,6 +16,7 @@ dependencies:
     - theano==0.8.2
     - pip:
         - gtimer
+        - protobuf==3.19.6
         - gym==0.8
         - mujoco_py==0.5.7
         - pyprind
