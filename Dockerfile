@@ -32,6 +32,9 @@ RUN pip install awscli
 # ALE requires zlib
 RUN apt-get -y install zlib1g-dev
 # MUJOCO requires graphics stuff (Why?)
+RUN cp /etc/apt/sources.list /etc/apt/sources.list~ \
+    && sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list \
+    && apt-get update
 RUN apt-get -y build-dep glfw
 RUN apt-get -y install libxrandr2 libxinerama-dev libxi6 libxcursor-dev
 RUN apt-get install -y vim ack-grep
