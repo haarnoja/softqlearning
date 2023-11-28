@@ -48,6 +48,7 @@ RUN pip install Pillow
 WORKDIR /root/sql
 
 ADD environment.yml /root/sql/environment.yml
+RUN pip install --upgrade requests
 RUN conda env create -f /root/sql/environment.yml \
     && conda env update
 
