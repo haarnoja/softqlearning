@@ -19,6 +19,8 @@ Currently, rendering of simulations is not supported on Docker due to a missing 
 export MUJOCO_LICENSE_PATH=<path_to_mujoco>/mjkey.txt
 ```
 
+Please note that you should not use relative paths such as `~/mujoco/mjkey.txt` in the environment variable, as Docker compose does not expand them. You could use `"$HOME/.mujoco/mjkey.txt"` instead.
+
 Once that's done, you can run the Docker container with
 
 ```
